@@ -1,445 +1,343 @@
 # SmartLearn - Interactive Learning Platform
 
-**SmartLearn** is a comprehensive interactive learning and student engagement platform designed for modern educational environments. It provides a complete ecosystem for lecturers to create and manage courses while offering students an engaging learning experience.
+**Language / 语言选择:** [English](#english) | [中文](#中文)
 
-## 🏗️ Architecture & Technology Stack
+---
 
-### Backend (Spring Boot)
-- **Framework:** Spring Boot 3.3.2 with Java 21
-- **Database:** MySQL 8.0 with Spring Data JPA/Hibernate
-- **Security:** Spring Security with BCrypt password encryption
-- **Authentication:** JWT-based token authentication
-- **API:** RESTful API design with CORS support
+## English
 
-### Frontend (React)
-- **Framework:** React 18.3.1 with modern hooks
-- **Build Tool:** Vite 5.2.0 for fast development
-- **Routing:** React Router DOM 6.30.1
-- **HTTP Client:** Axios 1.12.2
-- **State Management:** React Context API with Local Storage
-- **UI:** Custom CSS design system with responsive layout
+SmartLearn is a modern educational platform that enables lecturers to create courses and engage students through interactive tools and AI-powered features.
 
-### Core Features
-- **Multi-role Authentication:** Lecturer and Student roles with role-based access control
-- **Course Management:** Complete course creation, management, and enrollment system
-- **Interactive Dashboard:** Modern left-sidebar navigation with modular content panels
-- **AI-Powered Tools:** Question generation and answer clustering capabilities
-- **Word Cloud Activities:** Real-time collaborative word cloud generation
-- **Responsive Design:** Mobile-first design with modern UI components
+## 🏗️ Tech Stack
 
-## 📋 Prerequisites
-
-### System Requirements
-1. **Java Development Kit (JDK) 21+**
-2. **Node.js 16+ (LTS recommended)**
-3. **MySQL 8.0 Database Server**
-4. **Maven 3.6+ (or use included wrapper)**
-5. **Git** for version control
-
-### Development Tools (Recommended)
-- **IDE:** IntelliJ IDEA, VS Code, or Eclipse
-- **Database Client:** MySQL Workbench, phpMyAdmin, or DBeaver
-- **API Testing:** Postman or Thunder Client
+**Backend:** Spring Boot 3.3.2 + MySQL 8.0 + JWT Authentication  
+**Frontend:** React 18.3.1 + Vite 5.2.0 + Custom CSS Design System
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- Java 21+
+- Node.js 16+
+- MySQL 8.0
+
 ### Database Setup
-
-#### Method A: Local MySQL Installation
 ```sql
--- Create database and user
-CREATE DATABASE smartlearn 
-CHARACTER SET utf8mb4 
-COLLATE utf8mb4_unicode_ci;
-
+CREATE DATABASE smartlearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
 GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
-FLUSH PRIVILEGES;
 ```
 
-#### Method B: Docker MySQL (Alternative)
+### Run Backend
 ```bash
-docker run --name smartlearn-mysql \
-  -e MYSQL_ROOT_PASSWORD=rootpassword \
-  -e MYSQL_DATABASE=smartlearn \
-  -e MYSQL_USER=smartlearn_user \
-  -e MYSQL_PASSWORD=secure_password_123 \
-  -p 3306:3306 \
-  -d mysql:8.0
-```
-
-### Backend Setup (Spring Boot)
-
-#### Step 1: Database Configuration
-Update `backend/src/main/resources/application.yml`:
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/smartlearn?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
-    username: smartlearn_user
-    password: secure_password_123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update  # Automatically creates/updates tables
-    show-sql: true      # Logs SQL statements for debugging
-```
-
-#### Step 2: Build and Run Backend
-```bash
-# Navigate to backend directory
 cd backend
-
-# Clean and install dependencies
 mvn clean install
-
-# Run the application (will start on port 8080)
 mvn spring-boot:run
+# Backend: http://localhost:8080
 ```
-**Verification:** Backend should be accessible at `http://localhost:8080/api/hello`
 
-### Frontend Setup (React + Vite)
-
-#### Step 1: Install Dependencies
+### Run Frontend
 ```bash
-# Navigate to frontend directory
 cd frontend
-
-# Install all npm dependencies
 npm install
-# Alternative: yarn install or pnpm install
-```
-
-#### Step 2: Environment Configuration (Optional)
-Create `frontend/.env.local` for custom API configuration:
-```env
-VITE_API_BASE_URL=http://localhost:8080/api
-```
-
-#### Step 3: Run Development Server
-```bash
-# Start development server (will start on port 5173)
 npm run dev
-# Alternative: yarn dev or pnpm dev
-```
-**Verification:** Frontend should be accessible at `http://localhost:5173`
-
-### Production Build (Optional)
-
-#### Backend Production Build
-```bash
-cd backend
-mvn clean package
-java -jar target/smartlearn-backend-0.1.0.jar
+# Frontend: http://localhost:5173
 ```
 
-#### Frontend Production Build
-```bash
-cd frontend
-npm install
-npm run build
-# Output will be in 'dist' folder for deployment
-```
+## 🎯 Features
 
-## 🎯 Getting Started Guide
+### For Lecturers
+- **Course Management**: Create and manage courses with detailed information
+- **AI Tools**: Generate questions and analyze student responses
+- **Word Cloud Activities**: Interactive brainstorming sessions
+- **Student Analytics**: Track engagement and progress
 
-### User Registration and Demo
+### For Students
+- **Course Enrollment**: Browse and access enrolled courses
+- **Interactive Learning**: Participate in quizzes and activities
+- **Progress Tracking**: Monitor learning achievements
+- **Collaborative Tools**: Contribute to word clouds and discussions
 
-#### Initial System Setup
-1. **Access the Platform:** Navigate to `http://localhost:5173`
-2. **Registration Page:** Click "Get Started Free" or navigate to `/auth`
-3. **Create Accounts:** Register both lecturer and student accounts for full demonstration
-
-### Scenario 1: Lecturer Workflow
-
-#### Account Creation
-```json
-// Example registration data
-{
-  "username": "prof_smith",
-  "password": "SecurePass123!",
-  "role": "lecturer"
-}
-```
-
-#### Dashboard Navigation
-1. **Login:** Use lecturer credentials
-2. **Dashboard Access:** Automatically redirected to role-based dashboard
-3. **Module Navigation:** Use left sidebar to navigate between:
-   - **Overview:** Quick stats and recent activity
-   - **Course Management:** Create and manage courses
-   - **AI-Powered Tools:** Content generation and analysis
-   - **Student Engagement:** Interactive tools and activities
-   - **Analytics & Reports:** Learning analytics dashboard
-   - **Word Cloud Activities:** Collaborative word collection
-
-#### Content Creation Features
-1. **Course Management Module:**
-   - Create new courses with detailed descriptions
-   - Manage course content and resources
-   - Monitor student enrollment and progress
-
-2. **AI Tools Integration:**
-   - Generate quiz questions automatically
-   - Analyze student response patterns
-   - Create adaptive learning content
-
-3. **Interactive Features:**
-   - Set up word cloud activities for brainstorming
-   - Create real-time engagement tools
-   - Monitor student participation
-
-### Scenario 2: Student Workflow
-
-#### Account Creation
-```json
-// Example registration data
-{
-  "username": "student_jane",
-  "password": "StudentPass456!",
-  "role": "student"
-}
-```
-
-#### Learning Experience
-1. **Student Dashboard:** Access personalized learning dashboard
-2. **Available Modules:**
-   - **Overview:** Personal learning progress and achievements
-   - **My Courses:** Browse and access enrolled courses
-   - **Interactive Quizzes:** Participate in course assessments
-   - **Word Cloud Activities:** Contribute to collaborative activities
-
-#### Engagement Features
-1. **Course Participation:**
-   - View course announcements and updates
-   - Access learning materials and resources
-   - Track personal progress and completion
-
-2. **Interactive Learning:**
-   - Participate in real-time quizzes
-   - Contribute to word cloud brainstorming sessions
-   - Engage with multimedia learning content
-
-### Interactive Features Demo
-
-#### Word Cloud Activity
-1. **Lecturer Setup:**
-   - Navigate to "Word Cloud Activities" module
-   - Create a new brainstorming session
-   - Share session details with students
-
-2. **Student Participation:**
-   - Access the word cloud activity
-   - Submit relevant words or concepts
-   - View real-time collaborative word cloud
-
-3. **Real-time Collaboration:**
-   - Both roles can see live updates
-   - Word frequency visualization
-   - Export results for further analysis
-
-#### AI-Powered Tools Demo
-1. **Question Generation:**
-   ```bash
-   # API endpoint test
-   curl -X POST http://localhost:8080/api/ai/generateQuestion \
-   -H "Content-Type: application/json" \
-   -d '"Introduction to React Components"'
-   ```
-
-2. **Answer Analysis:**
-   ```bash
-   # API endpoint test
-   curl -X POST http://localhost:8080/api/ai/clusterAnswers \
-   -H "Content-Type: application/json" \
-   -d '["React is a library", "Components are reusable", "JSX syntax"]'
-   ```
-
-## 📚 API Endpoints
+## 🔧 Key Functionality
 
 ### Authentication
-- `POST /api/v1/auth/register` — User registration with role selection
-- `POST /api/v1/auth/login` — User login with JWT token response
-
-### Health Check
-- `GET /api/hello` — System health and connectivity check
-
-### AI Features
-- `POST /api/ai/generateQuestion` — AI-powered question generation
-- `POST /api/ai/clusterAnswers` — Intelligent answer clustering
+- Role-based access (Lecturer/Student)
+- JWT token authentication
+- Secure password encryption
 
 ### Interactive Features
-- `POST /api/wordcloud/submit` — Submit words for collaborative word clouds
-- `GET /api/wordcloud/data` — Retrieve aggregated word cloud data
+- Real-time word cloud collaboration
+- AI-powered question generation
+- Modern responsive dashboard
+- Mobile-friendly design
 
-### Course Management (Future Extensions)
-- Course creation and management
-- Student enrollment and progress tracking
-- Assignment and quiz systems
+### Current Status
+✅ **Completed**
+- User authentication and role management
+- Course creation and listing
+- Word cloud activities
+- AI tools integration (mock)
+- Responsive UI with elegant color scheme
+
+🔄 **In Progress**
+- Student enrollment system
+- Assignment management
 - Real-time collaboration features
 
-## 🔧 Technical Features
+## � API Endpoints
 
-### Current Implementation ✅
+```bash
+# Authentication
+POST /api/v1/auth/register
+POST /api/v1/auth/login
 
-#### Authentication & Security
-- **Multi-role Registration:** Lecturer and Student role support
-- **JWT Authentication:** Token-based session management
-- **Password Security:** BCrypt encryption for secure password storage
-- **Role-based Access:** Protected routes and features based on user roles
+# Health Check
+GET /api/hello
 
-#### User Interface
-- **Modern Dashboard:** Left-sidebar navigation with modular content
-- **Responsive Design:** Mobile-first approach with responsive layouts
-- **Theme System:** Custom brown color scheme with consistent styling
-- **Interactive Components:** Real-time feedback and smooth transitions
+# AI Features
+POST /api/ai/generateQuestion
+POST /api/ai/clusterAnswers
 
-#### Core Functionality
-- **Word Cloud System:** Real-time collaborative word collection and visualization
-- **AI Integration:** Placeholder endpoints for question generation and answer analysis
-- **Health Monitoring:** System health check endpoints
-- **Data Persistence:** MySQL database with automatic schema generation
+# Word Cloud
+POST /api/wordcloud/submit
+GET /api/wordcloud/data
+```
 
-### Planned Extensions 🔄
+## 🎨 Demo Accounts
 
-#### Course Management System
-- **Course Creation:** Detailed course setup with metadata
-- **Student Enrollment:** Bulk enrollment and management tools
-- **Content Management:** Upload and organize course materials
-- **Progress Tracking:** Monitor student learning progress
+Use these for testing:
 
-#### Assessment Tools
-- **Quiz Builder:** Create and manage interactive quizzes
-- **Real-time Assessment:** Live quiz participation with instant feedback
-- **Grading System:** Automated and manual grading capabilities
-- **Analytics Dashboard:** Detailed performance analytics
+**Lecturer:**
+- Username: teacher1
+- Password: password123
 
-#### Collaboration Features
-- **Announcement System:** Course-wide communication tools
-- **Discussion Forums:** Student-lecturer interaction spaces
-- **Real-time Chat:** Instant messaging capabilities
-- **File Sharing:** Secure document and resource sharing
+**Student:**
+- Username: student1  
+- Password: password123
 
-## 🚀 Deployment Options
+## � Deployment
 
-### Backend Deployment
-**Recommended:** Cloud platforms with Java support
-- **Render/Railway:** Simple Java web service deployment
-- **AWS/GCP/Azure:** Enterprise-grade cloud deployment
-- **Heroku:** Quick prototype deployment
-
-**Build Command:**
+### Backend (Production)
 ```bash
 mvn clean package
 java -jar target/smartlearn-backend-0.1.0.jar
 ```
 
-### Frontend Deployment
-**Recommended:** Static site hosting platforms
-- **Vercel/Netlify:** Optimized for React applications
-- **AWS S3 + CloudFront:** Enterprise CDN distribution
-- **GitHub Pages:** Simple static hosting
-
-**Build Command:**
+### Frontend (Production)
 ```bash
 npm run build
+# Deploy 'dist' folder to static hosting
 ```
 
-### Configuration for Production
-1. **Update API Base URL:** Edit `frontend/src/services/api.js`
-2. **Environment Variables:** Configure database and security settings
-3. **SSL/HTTPS:** Enable secure connections for production
+**Recommended Platforms:**
+- Backend: Render, Railway, AWS
+- Frontend: Vercel, Netlify, GitHub Pages
 
-## 🐛 Troubleshooting Guide
-
-### Common Issues and Solutions
-
-#### Database Connection Issues
-```bash
-# Check MySQL service status
-sudo systemctl status mysql  # Linux
-brew services list | grep mysql  # macOS
-
-# Test database connection
-mysql -u smartlearn_user -p smartlearn
-```
-
-#### Port Conflicts
-```bash
-# Check if ports are in use
-netstat -an | grep 8080  # Backend port
-netstat -an | grep 5173  # Frontend port
-
-# Kill processes if needed
-sudo kill -9 $(lsof -t -i:8080)
-```
-
-#### Build Issues
-```bash
-# Clean Maven cache
-mvn clean
-rm -rf ~/.m2/repository/com/smartlearn
-
-# Clear npm cache
-npm cache clean --force
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Development Tips
-
-#### Hot Reloading
-- **Frontend:** Vite provides instant hot module replacement
-- **Backend:** Use Spring Boot DevTools for automatic restart
-
-#### Debugging
-- **Frontend:** Browser DevTools with React DevTools extension
-- **Backend:** IDE debugging with breakpoints
-- **Database:** Check application logs for SQL statements
-
-#### Performance Monitoring
-- **Frontend:** React Profiler for component performance
-- **Backend:** Spring Actuator endpoints for health monitoring
-- **Database:** MySQL slow query log analysis
-
-## 🔧 Development & Extension
+## �️ Development
 
 ### Project Structure
 ```
 SmartLearn/
-├── backend/                 # Spring Boot API
-│   ├── src/main/java/com/smartlearn/
-│   │   ├── auth/           # Authentication & Security
-│   │   ├── controller/     # REST Controllers
-│   │   ├── model/          # JPA Entities
-│   │   ├── service/        # Business Logic
-│   │   └── repo/           # Data Repositories
-│   └── src/main/resources/
-├── frontend/               # React Application
+├── backend/           # Spring Boot API
+├── frontend/          # React App
 │   ├── src/
-│   │   ├── components/     # Reusable Components
-│   │   ├── pages/          # Page Components
-│   │   ├── services/       # API Services
-│   │   └── styles/         # CSS Styles
-│   └── public/
-└── docs/                   # Documentation
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── contexts/  # Auth & State
+│   │   └── styles/    # CSS Design System
+└── README.md
 ```
 
-### Next Steps for Extension
-- **Database Scaling:** Implement connection pooling and optimization
-- **Real-time Features:** Add WebSocket support for live collaboration
-- **File Management:** Course materials and assignment uploads
-- **Advanced Analytics:** Detailed learning analytics and reporting
-- **Mobile App:** React Native mobile application
-- **Microservices:** Service decomposition for scalability
-- **CI/CD Pipeline:** Automated testing and deployment
+### Environment Configuration
+```yaml
+# backend/src/main/resources/application.yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlearn
+    username: smartlearn_user
+    password: secure_password_123
+```
 
-## 📄 License & Contributing
+## 🐛 Troubleshooting
 
-This project is designed for educational purposes and can be extended for commercial use. Contributions are welcome through pull requests and issue reporting.
+**Port Conflicts:**
+```bash
+netstat -an | grep 8080  # Check backend port
+netstat -an | grep 5173  # Check frontend port
+```
 
-**Note:** This platform is designed for educational demonstration and can be extended for production use with additional security, scalability, and feature enhancements.
+**Database Issues:**
+```bash
+mysql -u smartlearn_user -p smartlearn  # Test connection
+```
 
 ---
 
-**SmartLearn** - Transforming education through interactive technology 🎓
+## 中文
+
+SmartLearn 是一个现代化的教育平台，使讲师能够创建课程并通过互动工具和AI功能与学生互动。
+
+### 🏗️ 技术栈
+
+**后端:** Spring Boot 3.3.2 + MySQL 8.0 + JWT 认证  
+**前端:** React 18.3.1 + Vite 5.2.0 + 自定义CSS设计系统
+
+### 🚀 快速开始
+
+#### 环境要求
+- Java 21+
+- Node.js 16+
+- MySQL 8.0
+
+#### 数据库配置
+```sql
+CREATE DATABASE smartlearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
+GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
+```
+
+#### 启动后端
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+# 后端: http://localhost:8080
+```
+
+#### 启动前端
+```bash
+cd frontend
+npm install
+npm run dev
+# 前端: http://localhost:5173
+```
+
+### 🎯 功能特性
+
+#### 讲师功能
+- **课程管理**: 创建和管理详细的课程信息
+- **AI工具**: 生成问题并分析学生回答
+- **词云活动**: 互动式头脑风暴会话
+- **学生分析**: 跟踪参与度和进度
+
+#### 学生功能
+- **课程注册**: 浏览和访问已注册的课程
+- **互动学习**: 参与测验和活动
+- **进度跟踪**: 监控学习成就
+- **协作工具**: 参与词云和讨论
+
+### 🔧 核心功能
+
+#### 用户认证
+- 基于角色的访问控制（讲师/学生）
+- JWT令牌认证
+- 安全密码加密
+
+#### 互动特性
+- 实时词云协作
+- AI驱动的问题生成
+- 现代响应式仪表板
+- 移动端友好设计
+
+#### 当前状态
+✅ **已完成**
+- 用户认证和角色管理
+- 课程创建和列表
+- 词云活动
+- AI工具集成（模拟）
+- 优雅配色的响应式UI
+
+🔄 **进行中**
+- 学生注册系统
+- 作业管理
+- 实时协作功能
+
+### 📋 API接口
+
+```bash
+# 用户认证
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+
+# 健康检查
+GET /api/hello
+
+# AI功能
+POST /api/ai/generateQuestion
+POST /api/ai/clusterAnswers
+
+# 词云
+POST /api/wordcloud/submit
+GET /api/wordcloud/data
+```
+
+### 🎨 演示账户
+
+测试用账户：
+
+**讲师:**
+- 用户名: teacher1
+- 密码: password123
+
+**学生:**
+- 用户名: student1  
+- 密码: password123
+
+### 🚢 部署
+
+#### 后端（生产环境）
+```bash
+mvn clean package
+java -jar target/smartlearn-backend-0.1.0.jar
+```
+
+#### 前端（生产环境）
+```bash
+npm run build
+# 将 'dist' 文件夹部署到静态托管
+```
+
+**推荐平台:**
+- 后端: Render, Railway, AWS
+- 前端: Vercel, Netlify, GitHub Pages
+
+### 🛠️ 开发
+
+#### 项目结构
+```
+SmartLearn/
+├── backend/           # Spring Boot API
+├── frontend/          # React 应用
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── contexts/  # 认证和状态
+│   │   └── styles/    # CSS设计系统
+└── README.md
+```
+
+#### 环境配置
+```yaml
+# backend/src/main/resources/application.yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/smartlearn
+    username: smartlearn_user
+    password: secure_password_123
+```
+
+### 🐛 故障排除
+
+**端口冲突:**
+```bash
+netstat -an | grep 8080  # 检查后端端口
+netstat -an | grep 5173  # 检查前端端口
+```
+
+**数据库问题:**
+```bash
+mysql -u smartlearn_user -p smartlearn  # 测试连接
+```
+
+---
+
+**SmartLearn** - Modern education through interactive technology 🎓
