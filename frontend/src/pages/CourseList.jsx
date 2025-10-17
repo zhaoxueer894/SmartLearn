@@ -35,10 +35,32 @@ export default function CourseList() {
     ]);
 
     return (
-        <div className="container py-8">
+        <div className="min-h-screen bg-gray-50">
+            {/* Header with Back to Home Button */}
+            <div className="bg-white shadow-sm border-b border-blue">
+                <div className="container py-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-4">
+                            <Link to="/" className="text-2xl font-bold text-blue hover:text-blue-600 transition">
+                                SmartLearn
+                            </Link>
+                            <span className="text-gray-300">|</span>
+                            <h1 className="text-xl font-semibold text-blue">Course Catalog</h1>
+                        </div>
+                        <Link to="/" className="btn btn-secondary">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Home
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container py-8">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-primary mb-2">Course Catalog</h1>
+                <h2 className="text-3xl font-bold text-blue mb-2">Available Courses</h2>
                 <p className="text-secondary">
                     Browse all available courses for the current semester.
                 </p>
@@ -131,7 +153,7 @@ export default function CourseList() {
             {/* Call to Action */}
             {!user && (
                 <div className="text-center mt-12 py-8">
-                    <h2 className="text-xl font-semibold text-primary mb-4">
+                    <h2 className="text-xl font-semibold text-blue mb-4">
                         Ready to start learning?
                     </h2>
                     <p className="text-secondary mb-6">
@@ -142,6 +164,7 @@ export default function CourseList() {
                     </Link>
                 </div>
             )}
+            </div>
         </div>
     );
 }

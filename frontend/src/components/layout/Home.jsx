@@ -13,7 +13,9 @@ const Home = () => {
                 <nav className="bg-white shadow-sm border-b border-blue">
                     <div className="container py-4">
                         <div className="flex justify-between items-center">
-                            <h1 className="text-2xl font-bold text-blue">SmartLearn</h1>
+                            <Link to="/" className="text-2xl font-bold text-blue hover:text-blue-600 transition cursor-pointer">
+                                SmartLearn
+                            </Link>
                             <div className="flex items-center gap-4">
                                 <span className="text-secondary">
                                     Welcome, {user?.username} ({isLecturer ? 'Lecturer' : 'Student'})

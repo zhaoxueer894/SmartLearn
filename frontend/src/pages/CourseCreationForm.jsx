@@ -45,19 +45,41 @@ const CourseCreationForm = () => {
     };
 
     return (
+        <div className="min-h-screen bg-gray-50">
+            {/* Header with Back to Home Button */}
+            <div className="bg-white shadow-sm border-b border-blue">
+                <div className="container py-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-4">
+                            <Link to="/" className="text-2xl font-bold text-blue hover:text-blue-600 transition">
+                                SmartLearn
+                            </Link>
+                            <span className="text-gray-300">|</span>
+                            <h1 className="text-xl font-semibold text-blue">Course Management</h1>
+                        </div>
+                        <Link to="/" className="btn btn-secondary">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Home
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
         <div className="container py-8">
             <div className="max-w-2xl mx-auto">
                 {/* Header with breadcrumb */}
                 <div className="mb-8">
                     <nav className="flex items-center text-sm text-light mb-4" aria-label="Breadcrumb">
-                        <Link to="/lecturer/courses" className="hover:text-primary">My Courses</Link>
+                        <Link to="/courses" className="hover:text-blue">My Courses</Link>
                         <svg className="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                        <span className="text-primary">Create New Course</span>
+                        <span className="text-blue">Create New Course</span>
                     </nav>
                     
-                    <h1 className="text-3xl font-bold text-primary mb-2">Create New Course</h1>
+                    <h2 className="text-3xl font-bold text-blue mb-2">Create New Course</h2>
                     <p className="text-secondary">
                         Set up a new course for your students with detailed information and enrollment settings.
                     </p>
@@ -72,7 +94,7 @@ const CourseCreationForm = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
                             </div>
-                            <h2 className="text-xl font-semibold text-primary">Course Information</h2>
+                            <h2 className="text-xl font-semibold text-blue">Course Information</h2>
                         </div>
                     </div>
                     
@@ -81,7 +103,7 @@ const CourseCreationForm = () => {
                             {/* Basic Information */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-secondary mb-2">
+                                    <label className="block text-sm font-medium text-blue mb-2">
                                         Course Code *
                                     </label>
                                     <input
@@ -91,7 +113,7 @@ const CourseCreationForm = () => {
                                         value={courseData.courseCode}
                                         onChange={handleInputChange}
                                         required
-                                        className="input w-full"
+                                        className="form-input w-full"
                                         pattern="[A-Z]{2,4}[0-9]{3,4}"
                                         title="Course code should be in format like CS101 or MATH201"
                                     />
@@ -101,7 +123,7 @@ const CourseCreationForm = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-secondary mb-2">
+                                    <label className="block text-sm font-medium text-blue mb-2">
                                         Semester *
                                     </label>
                                     <select
@@ -109,7 +131,7 @@ const CourseCreationForm = () => {
                                         value={courseData.semester}
                                         onChange={handleInputChange}
                                         required
-                                        className="input w-full"
+                                        className="form-select w-full"
                                     >
                                         <option value="">Select Semester</option>
                                         <option value="Fall 2024">Fall 2024</option>
@@ -120,7 +142,7 @@ const CourseCreationForm = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-secondary mb-2">
+                                <label className="block text-sm font-medium text-blue mb-2">
                                     Course Name *
                                 </label>
                                 <input
@@ -130,12 +152,12 @@ const CourseCreationForm = () => {
                                     value={courseData.courseName}
                                     onChange={handleInputChange}
                                     required
-                                    className="input w-full"
+                                    className="form-input w-full"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-secondary mb-2">
+                                <label className="block text-sm font-medium text-blue mb-2">
                                     Course Description
                                 </label>
                                 <textarea
@@ -144,7 +166,7 @@ const CourseCreationForm = () => {
                                     value={courseData.description}
                                     onChange={handleInputChange}
                                     rows={4}
-                                    className="input w-full resize-vertical"
+                                    className="form-input w-full resize-vertical"
                                 />
                                 <p className="text-xs text-light mt-1">
                                     Help students understand what they'll learn in this course.
@@ -154,7 +176,7 @@ const CourseCreationForm = () => {
                             {/* Course Settings */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-secondary mb-2">
+                                    <label className="block text-sm font-medium text-blue mb-2">
                                         Credits *
                                     </label>
                                     <select
@@ -162,7 +184,7 @@ const CourseCreationForm = () => {
                                         value={courseData.credits}
                                         onChange={handleInputChange}
                                         required
-                                        className="input w-full"
+                                        className="form-select w-full"
                                     >
                                         <option value={1}>1 Credit</option>
                                         <option value={2}>2 Credits</option>
@@ -174,7 +196,7 @@ const CourseCreationForm = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-secondary mb-2">
+                                    <label className="block text-sm font-medium text-blue mb-2">
                                         Enrollment Capacity *
                                     </label>
                                     <input
@@ -185,7 +207,7 @@ const CourseCreationForm = () => {
                                         value={courseData.enrollmentCapacity}
                                         onChange={handleInputChange}
                                         required
-                                        className="input w-full"
+                                        className="form-input w-full"
                                     />
                                     <p className="text-xs text-light mt-1">
                                         Maximum number of students that can enroll.
@@ -195,11 +217,11 @@ const CourseCreationForm = () => {
 
                             {/* Course Preview */}
                             <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                                <h3 className="text-sm font-medium text-secondary mb-3">Course Preview</h3>
+                                <h3 className="text-sm font-medium text-blue mb-3">Course Preview</h3>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex justify-between">
                                         <span className="text-light">Course:</span>
-                                        <span className="text-primary font-medium">
+                                        <span className="text-blue font-medium">
                                             {courseData.courseCode ? `${courseData.courseCode} - ${courseData.courseName || 'Course Name'}` : 'Course Code - Course Name'}
                                         </span>
                                     </div>
@@ -251,6 +273,7 @@ const CourseCreationForm = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

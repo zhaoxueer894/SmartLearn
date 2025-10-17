@@ -160,7 +160,7 @@ const AuthPage = () => {
                                     setPassword('');
                                     setRole('student');
                                 }}
-                                className="text-blue hover:text-blue-hover font-medium transition"
+                                className="text-red hover:text-red-hover font-medium transition"
                                 disabled={isLoading}
                             >
                                 {isRegister ? 'Sign in' : 'Create account'}
