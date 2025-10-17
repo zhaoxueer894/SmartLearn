@@ -8,9 +8,9 @@
 
 SmartLearn is a modern educational platform that enables lecturers to create courses and engage students through interactive tools and AI-powered features.
 
-## 🏗️ Tech Stack
+### 🏗️ Tech Stack
 
-**Backend:** Spring Boot 3.3.2 + MySQL 8.0 + JWT Authentication  
+**Backend:** Spring Boot 3.3.2 + MySQL 8.0 + Spring Security + BCrypt  
 **Frontend:** React 18.3.1 + Vite 5.2.0 + Custom CSS Design System
 
 ## 🚀 Quick Start
@@ -59,10 +59,11 @@ npm run dev
 
 ## 🔧 Key Functionality
 
-### Authentication
+#### Authentication
 - Role-based access (Lecturer/Student)
-- JWT token authentication
-- Secure password encryption
+- Frontend: Mock authentication (development mode)
+- Backend: Real database authentication with BCrypt
+- Note: Frontend uses mock login, backend has full auth implementation
 
 ### Interactive Features
 - Real-time word cloud collaboration
@@ -70,105 +71,50 @@ npm run dev
 - Modern responsive dashboard
 - Mobile-friendly design
 
-### Current Status
-✅ **Completed**
-- User authentication and role management
-- Course creation and listing
-- Word cloud activities
-- AI tools integration (mock)
-- Responsive UI with elegant color scheme
-
-🔄 **In Progress**
+#### Current Status
+✅ **Fully Implemented Backend**
+- Complete REST API with 15+ endpoints
+- User authentication with database persistence
+- Course management (CRUD operations)
 - Student enrollment system
-- Assignment management
-- Real-time collaboration features
+- Quiz and announcement systems
+- Word cloud collaboration features
 
-## � API Endpoints
+✅ **Frontend (Mock Integration)**
+- User interface for all features
+- Mock authentication (not connected to backend)
+- Course creation and management UI
+- Word cloud activities
+- AI tools integration (mock data)
+- Responsive design with elegant color scheme
 
-```bash
-# Authentication
-POST /api/v1/auth/register
-POST /api/v1/auth/login
+🔄 **Integration Gap**
+- Frontend uses mock authentication instead of backend API
+- Frontend displays mock data instead of real database data
+- API endpoints exist but frontend doesn't call them
 
-# Health Check
-GET /api/hello
+## ⚠️ Important Notes
 
-# AI Features
-POST /api/ai/generateQuestion
-POST /api/ai/clusterAnswers
+### Backend vs Frontend Implementation Status
 
-# Word Cloud
-POST /api/wordcloud/submit
-GET /api/wordcloud/data
-```
+**Backend (Spring Boot):** ✅ **Production Ready**
+- Complete MySQL database integration
+- 15+ REST API endpoints fully implemented
+- Real user authentication with BCrypt encryption
+- Course management, enrollment, quiz, and announcement systems
+- All CRUD operations working with database persistence
 
-## 🎨 Demo Accounts
+**Frontend (React):** ⚠️ **Development Mode**
+- UI is complete and fully functional
+- Currently uses mock data and localStorage
+- Authentication bypasses backend API calls
+- All features work with simulated data
 
-Use these for testing:
-
-**Lecturer:**
-- Username: teacher1
-- Password: password123
-
-**Student:**
-- Username: student1  
-- Password: password123
-
-## � Deployment
-
-### Backend (Production)
-```bash
-mvn clean package
-java -jar target/smartlearn-backend-0.1.0.jar
-```
-
-### Frontend (Production)
-```bash
-npm run build
-# Deploy 'dist' folder to static hosting
-```
-
-**Recommended Platforms:**
-- Backend: Render, Railway, AWS
-- Frontend: Vercel, Netlify, GitHub Pages
-
-## �️ Development
-
-### Project Structure
-```
-SmartLearn/
-├── backend/           # Spring Boot API
-├── frontend/          # React App
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── contexts/  # Auth & State
-│   │   └── styles/    # CSS Design System
-└── README.md
-```
-
-### Environment Configuration
-```yaml
-# backend/src/main/resources/application.yml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/smartlearn
-    username: smartlearn_user
-    password: secure_password_123
-```
-
-## 🐛 Troubleshooting
-
-**Port Conflicts:**
-```bash
-netstat -an | grep 8080  # Check backend port
-netstat -an | grep 5173  # Check frontend port
-```
-
-**Database Issues:**
-```bash
-mysql -u smartlearn_user -p smartlearn  # Test connection
-```
+### To Connect Frontend to Backend:
+1. Update `AuthContext.jsx` to call `/api/v1/auth/login` instead of mock login
+2. Replace mock data in course/enrollment components with API calls
+3. Configure API base URL for production deployment
+4. Test all API integrations thoroughly
 
 ---
 
@@ -178,7 +124,7 @@ SmartLearn 是一个现代化的教育平台，使讲师能够创建课程并通
 
 ### 🏗️ 技术栈
 
-**后端:** Spring Boot 3.3.2 + MySQL 8.0 + JWT 认证  
+**后端:** Spring Boot 3.3.2 + MySQL 8.0 + Spring Security + BCrypt  
 **前端:** React 18.3.1 + Vite 5.2.0 + 自定义CSS设计系统
 
 ### 🚀 快速开始
@@ -229,8 +175,9 @@ npm run dev
 
 #### 用户认证
 - 基于角色的访问控制（讲师/学生）
-- JWT令牌认证
-- 安全密码加密
+- 前端：模拟认证（开发模式）
+- 后端：基于数据库的真实认证，使用BCrypt加密
+- 注意：前端使用模拟登录，后端已有完整认证实现
 
 #### 互动特性
 - 实时词云协作
@@ -239,103 +186,86 @@ npm run dev
 - 移动端友好设计
 
 #### 当前状态
-✅ **已完成**
-- 用户认证和角色管理
-- 课程创建和列表
-- 词云活动
-- AI工具集成（模拟）
-- 优雅配色的响应式UI
-
-🔄 **进行中**
+✅ **后端完全实现**
+- 完整的REST API，包含15+个接口
+- 基于数据库的用户认证系统
+- 课程管理（CRUD操作）
 - 学生注册系统
-- 作业管理
-- 实时协作功能
+- 测验和公告系统
+- 词云协作功能
+
+✅ **前端（模拟集成）**
+- 所有功能的用户界面
+- 模拟认证（未连接后端）
+- 课程创建和管理界面
+- 词云活动
+- AI工具集成（模拟数据）
+- 优雅配色的响应式设计
+
+🔄 **集成差距**
+- 前端使用模拟认证而非后端API
+- 前端显示模拟数据而非真实数据库数据
+- API接口已存在但前端未调用
+
+## ⚠️ 重要说明
+
+### 后端与前端实现状态
+
+**后端 (Spring Boot):** ✅ **生产就绪**
+- 完整的MySQL数据库集成
+- 15+个REST API接口完全实现
+- 基于BCrypt加密的真实用户认证
+- 课程管理、注册、测验和公告系统
+- 所有CRUD操作都与数据库持久化工作
+
+**前端 (React):** ⚠️ **开发模式**
+- UI界面完整且功能齐全
+- 当前使用模拟数据和localStorage
+- 认证绕过后端API调用
+- 所有功能都使用模拟数据运行
+
+### 连接前端到后端的步骤:
+1. 更新 `AuthContext.jsx` 调用 `/api/v1/auth/login` 而非模拟登录
+2. 用API调用替换课程/注册组件中的模拟数据
+3. 配置用于生产部署的API基础URL
+4. 彻底测试所有API集成
 
 ### 📋 API接口
 
 ```bash
-# 用户认证
+# 用户认证（完全实现）
 POST /api/v1/auth/register
 POST /api/v1/auth/login
 
 # 健康检查
 GET /api/hello
 
-# AI功能
+# AI功能（模拟实现）
 POST /api/ai/generateQuestion
 POST /api/ai/clusterAnswers
 
-# 词云
+# 词云（完全实现）
 POST /api/wordcloud/submit
 GET /api/wordcloud/data
-```
 
-### 🎨 演示账户
+# 课程管理（完全实现）
+POST /api/v1/courses
+GET /api/v1/courses
+PUT /api/v1/courses/{id}
+DELETE /api/v1/courses/{id}
 
-测试用账户：
+# 学生注册系统（完全实现）
+POST /api/v1/courses/{courseId}/enrollments
+GET /api/v1/courses/{courseId}/enrollments
 
-**讲师:**
-- 用户名: teacher1
-- 密码: password123
+# 公告系统（完全实现）
+POST /api/v1/courses/{courseId}/announcements
+GET /api/v1/courses/{courseId}/announcements
 
-**学生:**
-- 用户名: student1  
-- 密码: password123
-
-### 🚢 部署
-
-#### 后端（生产环境）
-```bash
-mvn clean package
-java -jar target/smartlearn-backend-0.1.0.jar
-```
-
-#### 前端（生产环境）
-```bash
-npm run build
-# 将 'dist' 文件夹部署到静态托管
-```
-
-**推荐平台:**
-- 后端: Render, Railway, AWS
-- 前端: Vercel, Netlify, GitHub Pages
-
-### 🛠️ 开发
-
-#### 项目结构
-```
-SmartLearn/
-├── backend/           # Spring Boot API
-├── frontend/          # React 应用
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── contexts/  # 认证和状态
-│   │   └── styles/    # CSS设计系统
-└── README.md
-```
-
-#### 环境配置
-```yaml
-# backend/src/main/resources/application.yml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/smartlearn
-    username: smartlearn_user
-    password: secure_password_123
-```
-
-### 🐛 故障排除
-
-**端口冲突:**
-```bash
-netstat -an | grep 8080  # 检查后端端口
-netstat -an | grep 5173  # 检查前端端口
-```
-
-**数据库问题:**
-```bash
-mysql -u smartlearn_user -p smartlearn  # 测试连接
+# 测验系统（完全实现）
+POST /api/v1/courses/{courseId}/quizzes
+GET /api/v1/courses/{courseId}/quizzes
+POST /api/v1/quizzes/{quizId}/submit
 ```
 
 ---
