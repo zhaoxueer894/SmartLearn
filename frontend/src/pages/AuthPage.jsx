@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
     const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [role, setRole] = useState('student');
     const [isRegister, setIsRegister] = useState(false);
     const { login, register } = useAuth();
@@ -11,17 +12,29 @@ const AuthPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // 验证输入
+        if (!username.trim()) {
+            alert('Username is required');
+            return;
+        }
+        
+        if (!password.trim()) {
+            alert('Password is required');
+            return;
+        }
+
         let success;
         if (isRegister) {
-            success = await register(username, role);
+            success = await register(username, password, role);
         } else {
-            success = await login(username);
+            success = await login(username, password);
         }
 
         if (success) {
             navigate('/');
         } else {
-            alert('Authentication failed. Try a different username.');
+            // 错误信息会在AuthContext中处理
         }
     };
 
@@ -34,6 +47,14 @@ const AuthPage = () => {
                     placeholder="Username (e.g., L1001 or S2001)"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    required
+                    style={{ width: '100%', padding: '10px', margin: '10px 0' }}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     style={{ width: '100%', padding: '10px', margin: '10px 0' }}
                 />
