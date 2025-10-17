@@ -31,12 +31,12 @@ export const AuthProvider = ({ children }) => {
                 setUser(mockUser);
                 return true;
             } else {
-                alert("请输入用户名和密码");
+                alert("Please enter username and password");
                 return false;
             }
         } catch (error) {
             console.error("Login failed:", error);
-            alert("登录失败，请重试");
+            alert("Login failed, please try again");
             return false;
         }
     };
@@ -49,12 +49,12 @@ export const AuthProvider = ({ children }) => {
                 // After registration, automatically log in with the selected role
                 return await login(username, password, role);
             } else {
-                alert("请填写完整的注册信息");
+                alert("Please fill in all registration information");
                 return false;
             }
         } catch (error) {
             console.error("Registration failed:", error);
-            alert("注册失败，请重试");
+            alert("Registration failed, please try again");
             return false;
         }
     }

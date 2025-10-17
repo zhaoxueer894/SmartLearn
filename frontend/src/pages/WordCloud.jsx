@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 export default function WordCloud() {
   const [word, setWord] = useState("");
   const [cloud, setCloud] = useState({
-    "学习": 15,
-    "教育": 12,
-    "技术": 10,
-    "创新": 8,
-    "智能": 6
+    "Learning": 15,
+    "Education": 12,
+    "Technology": 10,
+    "Innovation": 8,
+    "Smart": 6
   }); // 使用模拟数据
 
   const submit = async () => {
@@ -27,7 +27,7 @@ export default function WordCloud() {
   const refresh = async () => {
     try {
       // 模拟刷新 - 在实际应用中会调用API
-      console.log('词云数据已刷新');
+      console.log('Word cloud data refreshed');
     } catch (error) {
       console.error('Error getting word cloud:', error);
     }

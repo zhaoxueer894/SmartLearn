@@ -9,9 +9,9 @@ export default function AiTools() {
     try {
       // 暂时使用模拟数据，避免服务调用
       if (topic.trim()) {
-        setResult(`模拟AI生成：关于 "${topic}" 的智能问题已生成！\n\n1. 什么是${topic}的核心概念？\n2. ${topic}在实际应用中有哪些特点？\n3. 如何更好地理解${topic}？`);
+        setResult(`AI Generated Mock: Smart questions about "${topic}" have been generated!\n\n1. What are the core concepts of ${topic}?\n2. What are the characteristics of ${topic} in practical applications?\n3. How to better understand ${topic}?`);
       } else {
-        setResult("请输入一个话题");
+        setResult("Please enter a topic");
       }
     } catch (error) {
       setResult(`Error: ${error.message}`);

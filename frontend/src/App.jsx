@@ -22,28 +22,28 @@ const AppRoutes = () => {
   const { isAuthenticated } = useAuth();
   return (
     <Routes>
-      {/* 认证页面 */}
+      {/* Authentication Page */}
       <Route path="/auth" element={isAuthenticated ? <Navigate to="/" replace /> : <AuthPage />} />
       
-      {/* 受保护的主页 */}
+      {/* Protected Home Page */}
       <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
       
-      {/* 工具页面 */}
+      {/* Tool Pages */}
       <Route path="/ai-tools" element={<ProtectedRoute><AiTools /></ProtectedRoute>} />
       <Route path="/word-cloud" element={<ProtectedRoute><WordCloud /></ProtectedRoute>} />
       
-      {/* 课程相关页面 */}
+      {/* Course Related Pages */}
       <Route path="/courses" element={<ProtectedRoute><LecturerCourseList /></ProtectedRoute>} />
       <Route path="/student/courses" element={<ProtectedRoute><StudentCourseList /></ProtectedRoute>} />
       <Route path="/courses/create" element={<ProtectedRoute><CourseCreationForm /></ProtectedRoute>} />
       
-      {/* 404页面 */}
+      {/* 404 Page */}
       <Route path="*" element={
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-primary mb-4">404</h1>
-            <p className="text-secondary mb-6">您访问的页面不存在</p>
-            <a href="/" className="btn btn-primary">返回首页</a>
+            <p className="text-secondary mb-6">Page not found</p>
+            <a href="/" className="btn btn-primary">Back to Home</a>
           </div>
         </div>
       } />

@@ -5,38 +5,38 @@ import { useAuth } from '../../contexts/AuthContext';
 const Home = () => {
     const { user, isAuthenticated, isLecturer, isStudent, logout } = useAuth();
 
-    // 如果用户已登录，显示用户专属的主页
+    // If user is logged in, show user-specific homepage
     if (isAuthenticated) {
         return (
             <div className="min-h-screen bg-gray-50">
-                {/* 顶部导航栏 */}
+                {/* Top Navigation Bar */}
                 <nav className="bg-white shadow-sm border-b">
                     <div className="container py-4">
                         <div className="flex justify-between items-center">
                             <h1 className="text-2xl font-bold text-primary">SmartLearn</h1>
                             <div className="flex items-center gap-4">
                                 <span className="text-secondary">
-                                    欢迎, {user?.username} ({isLecturer ? '教师' : '学生'})
+                                    Welcome, {user?.username} ({isLecturer ? 'Lecturer' : 'Student'})
                                 </span>
                                 <button
                                     onClick={logout}
                                     className="btn btn-ghost text-sm"
                                 >
-                                    退出登录
+                                    Sign Out
                                 </button>
                             </div>
                         </div>
                     </div>
                 </nav>
 
-                {/* 主要内容 */}
+                {/* Main Content */}
                 <div className="container py-12">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-primary mb-4">
-                            {isLecturer ? '教师工作台' : '学生学习中心'}
+                            {isLecturer ? 'Teacher Dashboard' : 'Student Learning Center'}
                         </h2>
                         <p className="text-lg text-secondary">
-                            {isLecturer ? '管理您的课程和学生' : '查看您的课程和作业'}
+                            {isLecturer ? 'Manage your courses and students' : 'View your courses and assignments'}
                         </p>
                     </div>
                     
@@ -46,30 +46,30 @@ const Home = () => {
                                 <Link to="/courses" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">📚</span>
-                                        <h3 className="text-xl font-semibold text-primary">课程管理</h3>
+                                        <h3 className="text-xl font-semibold text-primary">Course Management</h3>
                                     </div>
-                                    <p className="text-secondary">创建和管理您的课程内容</p>
+                                    <p className="text-secondary">Create and manage your course content</p>
                                 </Link>
                                 <div className="card p-6 card-hover cursor-pointer">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">👥</span>
-                                        <h3 className="text-xl font-semibold text-primary">学生管理</h3>
+                                        <h3 className="text-xl font-semibold text-primary">Student Management</h3>
                                     </div>
-                                    <p className="text-secondary">查看学生进度和成绩</p>
+                                    <p className="text-secondary">View student progress and grades</p>
                                 </div>
                                 <Link to="/ai-tools" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">🧠</span>
-                                        <h3 className="text-xl font-semibold text-primary">AI工具</h3>
+                                        <h3 className="text-xl font-semibold text-primary">AI Tools</h3>
                                     </div>
-                                    <p className="text-secondary">AI辅助教学和内容生成</p>
+                                    <p className="text-secondary">AI-assisted teaching and content generation</p>
                                 </Link>
                                 <Link to="/word-cloud" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">☁️</span>
-                                        <h3 className="text-xl font-semibold text-primary">词云活动</h3>
+                                        <h3 className="text-xl font-semibold text-primary">Word Cloud Activities</h3>
                                     </div>
-                                    <p className="text-secondary">创建互动词云收集反馈</p>
+                                    <p className="text-secondary">Create interactive word clouds for feedback</p>
                                 </Link>
                             </>
                         ) : (
@@ -77,43 +77,43 @@ const Home = () => {
                                 <Link to="/student/courses" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">📖</span>
-                                        <h3 className="text-xl font-semibold text-primary">我的课程</h3>
+                                        <h3 className="text-xl font-semibold text-primary">My Courses</h3>
                                     </div>
-                                    <p className="text-secondary">查看已报名的课程</p>
+                                    <p className="text-secondary">View enrolled courses</p>
                                 </Link>
                                 <div className="card p-6 card-hover cursor-pointer">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">📝</span>
-                                        <h3 className="text-xl font-semibold text-primary">作业任务</h3>
+                                        <h3 className="text-xl font-semibold text-primary">Assignments</h3>
                                     </div>
-                                    <p className="text-secondary">完成课程作业和测试</p>
+                                    <p className="text-secondary">Complete course assignments and tests</p>
                                 </div>
                                 <Link to="/ai-tools" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">📊</span>
-                                        <h3 className="text-xl font-semibold text-primary">AI工具</h3>
+                                        <h3 className="text-xl font-semibold text-primary">AI Tools</h3>
                                     </div>
-                                    <p className="text-secondary">体验AI辅助学习功能</p>
+                                    <p className="text-secondary">Experience AI-assisted learning features</p>
                                 </Link>
                                 <Link to="/word-cloud" className="card p-6 card-hover cursor-pointer block">
                                     <div className="flex items-center gap-3 mb-3">
                                         <span className="text-2xl">💬</span>
-                                        <h3 className="text-xl font-semibold text-primary">互动活动</h3>
+                                        <h3 className="text-xl font-semibold text-primary">Interactive Activities</h3>
                                     </div>
-                                    <p className="text-secondary">参与课堂互动和讨论</p>
+                                    <p className="text-secondary">Participate in classroom interactions and discussions</p>
                                 </Link>
                             </>
                         )}
                     </div>
 
-                    {/* 用户信息卡片 */}
+                    {/* User Information Card */}
                     <div className="card p-4 max-w-md mx-auto mt-8">
-                        <h4 className="font-semibold text-primary mb-2">账户信息</h4>
+                        <h4 className="font-semibold text-primary mb-2">Account Information</h4>
                         <div className="text-sm text-secondary space-y-1">
-                            <p>用户名: {user?.username}</p>
-                            <p>邮箱: {user?.email}</p>
-                            <p>角色: {user?.role}</p>
-                            <p>用户ID: {user?.id}</p>
+                            <p>Username: {user?.username}</p>
+                            <p>Email: {user?.email}</p>
+                            <p>Role: {user?.role}</p>
+                            <p>User ID: {user?.id}</p>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const Home = () => {
         );
     }
 
-    // 如果用户未登录，显示欢迎页面
+    // If user is not logged in, show welcome page
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Hero Section */}
