@@ -1,0 +1,27 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1, h2, h3, h4 {
+    color: #333;
+}
+
+a {
+    color: #d9534f; /* Red accent */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design basic */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+}
