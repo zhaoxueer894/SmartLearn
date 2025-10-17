@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 export default function CourseList() {

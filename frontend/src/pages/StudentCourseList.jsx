@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import api from '../api';
+// import { courseService } from '../services'; // 暂时注释掉
 
 const StudentCourseList = () => {
     const { user } = useAuth();

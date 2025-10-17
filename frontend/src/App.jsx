@@ -1,119 +1,64 @@
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './AuthContext';
 import './styles/global.css';
-
-import Navbar from './components/Navbar';
-import Home from './components/Home';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import AuthPage from './pages/AuthPage';
+import Home from './components/layout/Home';
+import AiTools from './pages/AiTools';
+import WordCloud from './pages/WordCloud';
 import LecturerCourseList from './pages/LecturerCourseList';
-import CourseCreationForm from './pages/CourseCreationForm';
-import LecturerCourseDetail from './pages/LecturerCourseDetail';
 import StudentCourseList from './pages/StudentCourseList';
-import StudentCourseDetail from './pages/StudentCourseDetail';
+import CourseCreationForm from './pages/CourseCreationForm';
 
-const ProtectedRoute = ({ element, allowedRoles }) => {
-    const { isAuthenticated, user } = useAuth();
-    
-    if (!isAuthenticated) {
-        return <Navigate to="/auth" replace />;
-    }
-
-    if (allowedRoles && !allowedRoles.includes(user?.role)) {
-        return <Navigate to="/" replace />;
-    }
-
-    return element;
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
+  return children;
 };
 
-const AppLayout = ({ children }) => {
-    return (
-        <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <main>
-                {children}
-            </main>
+const AppRoutes = () => {
+  const { isAuthenticated } = useAuth();
+  return (
+    <Routes>
+      {/* 认证页面 */}
+      <Route path="/auth" element={isAuthenticated ? <Navigate to="/" replace /> : <AuthPage />} />
+      
+      {/* 受保护的主页 */}
+      <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      
+      {/* 工具页面 */}
+      <Route path="/ai-tools" element={<ProtectedRoute><AiTools /></ProtectedRoute>} />
+      <Route path="/word-cloud" element={<ProtectedRoute><WordCloud /></ProtectedRoute>} />
+      
+      {/* 课程相关页面 */}
+      <Route path="/courses" element={<ProtectedRoute><LecturerCourseList /></ProtectedRoute>} />
+      <Route path="/student/courses" element={<ProtectedRoute><StudentCourseList /></ProtectedRoute>} />
+      <Route path="/courses/create" element={<ProtectedRoute><CourseCreationForm /></ProtectedRoute>} />
+      
+      {/* 404页面 */}
+      <Route path="*" element={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-primary mb-4">404</h1>
+            <p className="text-secondary mb-6">您访问的页面不存在</p>
+            <a href="/" className="btn btn-primary">返回首页</a>
+          </div>
         </div>
-    );
+      } />
+    </Routes>
+  );
 };
 
 const App = () => {
-    return (
-        <Router>
-            <AuthProvider>
-                <Routes>
-                    {/* Auth page without navbar */}
-                    <Route path="/auth" element={<AuthPage />} />
-                    
-                    {/* All other routes with navbar */}
-                    <Route path="/*" element={
-                        <AppLayout>
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-
-                                {/* Lecturer Routes */}
-                                <Route 
-                                    path="/lecturer/courses" 
-                                    element={
-                                        <ProtectedRoute 
-                                            element={<LecturerCourseList />} 
-                                            allowedRoles={['lecturer']} 
-                                        />
-                                    } 
-                                />
-                                <Route 
-                                    path="/lecturer/courses/new" 
-                                    element={
-                                        <ProtectedRoute 
-                                            element={<CourseCreationForm />} 
-                                            allowedRoles={['lecturer']} 
-                                        />
-                                    } 
-                                />
-                                <Route 
-                                    path="/lecturer/courses/:id" 
-                                    element={
-                                        <ProtectedRoute 
-                                            element={<LecturerCourseDetail />} 
-                                            allowedRoles={['lecturer']} 
-                                        />
-                                    } 
-                                />
-
-                                {/* Student Routes */}
-                                <Route 
-                                    path="/student/courses" 
-                                    element={
-                                        <ProtectedRoute 
-                                            element={<StudentCourseList />} 
-                                            allowedRoles={['student']} 
-                                        />
-                                    } 
-                                />
-                                <Route 
-                                    path="/student/courses/:id" 
-                                    element={
-                                        <ProtectedRoute 
-                                            element={<StudentCourseDetail />} 
-                                            allowedRoles={['student']} 
-                                        />
-                                    } 
-                                />
-
-                                <Route path="*" element={
-                                    <div className="container py-12 text-center">
-                                        <h1 className="text-4xl font-bold text-primary mb-4">404 - Page Not Found</h1>
-                                        <p className="text-secondary mb-6">The page you're looking for doesn't exist.</p>
-                                        <a href="/" className="btn btn-primary">Go Back Home</a>
-                                    </div>
-                                } />
-                            </Routes>
-                        </AppLayout>
-                    } />
-                </Routes>
-            </AuthProvider>
-        </Router>
-    );
+  return (
+    <Router>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </Router>
+  );
 };
 
 export default App;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
@@ -37,7 +37,8 @@ const AuthPage = () => {
             if (isRegister) {
                 success = await register(username, password, role);
             } else {
-                success = await login(username, password);
+                // 在登录时也传递选中的角色
+                success = await login(username, password, role);
             }
 
             if (success) {
@@ -113,24 +114,22 @@ const AuthPage = () => {
                             )}
                         </div>
 
-                        {/* Role Selection (Registration only) */}
-                        {isRegister && (
-                            <div>
-                                <label htmlFor="role" className="block text-sm font-medium text-primary mb-2">
-                                    I am a...
-                                </label>
-                                <select
-                                    id="role"
-                                    className="form-select"
-                                    value={role}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    disabled={isLoading}
-                                >
-                                    <option value="student">Student</option>
-                                    <option value="lecturer">Lecturer</option>
-                                </select>
-                            </div>
-                        )}
+                        {/* Role Selection (Both login and registration) */}
+                        <div>
+                            <label htmlFor="role" className="block text-sm font-medium text-primary mb-2">
+                                I am a...
+                            </label>
+                            <select
+                                id="role"
+                                className="form-select"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                disabled={isLoading}
+                            >
+                                <option value="student">Student</option>
+                                <option value="lecturer">Lecturer</option>
+                            </select>
+                        </div>
 
                         {/* Submit Button */}
                         <button

@@ -1,14 +1,124 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
-import Dashboard from './Dashboard';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Home = () => {
-    const { user, isAuthenticated, isLecturer, isStudent } = useAuth();
+    const { user, isAuthenticated, isLecturer, isStudent, logout } = useAuth();
 
-    // 如果用户已登录，显示Dashboard组件
+    // 如果用户已登录，显示用户专属的主页
     if (isAuthenticated) {
-        return <Dashboard />;
+        return (
+            <div className="min-h-screen bg-gray-50">
+                {/* 顶部导航栏 */}
+                <nav className="bg-white shadow-sm border-b">
+                    <div className="container py-4">
+                        <div className="flex justify-between items-center">
+                            <h1 className="text-2xl font-bold text-primary">SmartLearn</h1>
+                            <div className="flex items-center gap-4">
+                                <span className="text-secondary">
+                                    欢迎, {user?.username} ({isLecturer ? '教师' : '学生'})
+                                </span>
+                                <button
+                                    onClick={logout}
+                                    className="btn btn-ghost text-sm"
+                                >
+                                    退出登录
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                {/* 主要内容 */}
+                <div className="container py-12">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-primary mb-4">
+                            {isLecturer ? '教师工作台' : '学生学习中心'}
+                        </h2>
+                        <p className="text-lg text-secondary">
+                            {isLecturer ? '管理您的课程和学生' : '查看您的课程和作业'}
+                        </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                        {isLecturer ? (
+                            <>
+                                <Link to="/courses" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">📚</span>
+                                        <h3 className="text-xl font-semibold text-primary">课程管理</h3>
+                                    </div>
+                                    <p className="text-secondary">创建和管理您的课程内容</p>
+                                </Link>
+                                <div className="card p-6 card-hover cursor-pointer">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">👥</span>
+                                        <h3 className="text-xl font-semibold text-primary">学生管理</h3>
+                                    </div>
+                                    <p className="text-secondary">查看学生进度和成绩</p>
+                                </div>
+                                <Link to="/ai-tools" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">🧠</span>
+                                        <h3 className="text-xl font-semibold text-primary">AI工具</h3>
+                                    </div>
+                                    <p className="text-secondary">AI辅助教学和内容生成</p>
+                                </Link>
+                                <Link to="/word-cloud" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">☁️</span>
+                                        <h3 className="text-xl font-semibold text-primary">词云活动</h3>
+                                    </div>
+                                    <p className="text-secondary">创建互动词云收集反馈</p>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/student/courses" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">📖</span>
+                                        <h3 className="text-xl font-semibold text-primary">我的课程</h3>
+                                    </div>
+                                    <p className="text-secondary">查看已报名的课程</p>
+                                </Link>
+                                <div className="card p-6 card-hover cursor-pointer">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">📝</span>
+                                        <h3 className="text-xl font-semibold text-primary">作业任务</h3>
+                                    </div>
+                                    <p className="text-secondary">完成课程作业和测试</p>
+                                </div>
+                                <Link to="/ai-tools" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">📊</span>
+                                        <h3 className="text-xl font-semibold text-primary">AI工具</h3>
+                                    </div>
+                                    <p className="text-secondary">体验AI辅助学习功能</p>
+                                </Link>
+                                <Link to="/word-cloud" className="card p-6 card-hover cursor-pointer block">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <span className="text-2xl">💬</span>
+                                        <h3 className="text-xl font-semibold text-primary">互动活动</h3>
+                                    </div>
+                                    <p className="text-secondary">参与课堂互动和讨论</p>
+                                </Link>
+                            </>
+                        )}
+                    </div>
+
+                    {/* 用户信息卡片 */}
+                    <div className="card p-4 max-w-md mx-auto mt-8">
+                        <h4 className="font-semibold text-primary mb-2">账户信息</h4>
+                        <div className="text-sm text-secondary space-y-1">
+                            <p>用户名: {user?.username}</p>
+                            <p>邮箱: {user?.email}</p>
+                            <p>角色: {user?.role}</p>
+                            <p>用户ID: {user?.id}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     // 如果用户未登录，显示欢迎页面

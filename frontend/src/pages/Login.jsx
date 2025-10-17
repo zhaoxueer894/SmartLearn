@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { api } from "../services/api";
+import React, { useState } from 'react';
+// import { apiClient } from "../services"; // 暂时注释掉
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -8,7 +8,7 @@ export default function Login() {
 
   const handleRegister = async () => {
     try {
-      const res = await api.post("/users/register", { username, password });
+      const res = await apiClient.post("/users/register", { username, password });
       setMessage(res.data.message + " (username: " + res.data.username + ")");
     } catch (err) {
       setMessage("Error connecting to backend.");
@@ -17,7 +17,7 @@ export default function Login() {
 
   const testHello = async () => {
     try {
-      const res = await api.get("/hello");
+      const res = await apiClient.get("/hello");
       setMessage(res.data);
     } catch {
       setMessage("Backend not reachable.");
