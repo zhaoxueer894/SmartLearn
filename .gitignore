@@ -149,6 +149,17 @@ temp/
 ehthumbs.db
 Thumbs.db
 
+# Docker
+.dockerignore
+docker-compose.override.yml
+docker-compose.*.yml
+!docker-compose.yml
+
+# Docker volumes and data
+docker/data/
+docker/logs/
+docker/backups/
+
 # Application specific
 application-local.yml
 application-dev.yml
@@ -171,6 +182,7 @@ application-prod.yml
 *.bak
 *.backup
 *.orig
+README_backup.md
 
 # Test output
 test-output/

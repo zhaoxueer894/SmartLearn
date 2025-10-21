@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
@@ -37,7 +37,8 @@ const AuthPage = () => {
             if (isRegister) {
                 success = await register(username, password, role);
             } else {
-                success = await login(username, password);
+                // 在登录时也传递选中的角色
+                success = await login(username, password, role);
             }
 
             if (success) {
@@ -56,11 +57,11 @@ const AuthPage = () => {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
-                        <div className="w-12 h-12 bg-red rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 bg-blue rounded-xl flex items-center justify-center">
                             <span className="text-white font-bold text-lg">SL</span>
                         </div>
                     </div>
-                    <h2 className="text-3xl font-bold text-primary">
+                    <h2 className="text-3xl font-bold text-blue">
                         {isRegister ? 'Create your account' : 'Welcome back'}
                     </h2>
                     <p className="mt-2 text-secondary">
@@ -76,7 +77,7 @@ const AuthPage = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Username Field */}
                         <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-primary mb-2">
+                            <label htmlFor="username" className="block text-sm font-medium text-blue mb-2">
                                 Username
                             </label>
                             <input
@@ -93,7 +94,7 @@ const AuthPage = () => {
 
                         {/* Password Field */}
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-primary mb-2">
+                            <label htmlFor="password" className="block text-sm font-medium text-blue mb-2">
                                 Password
                             </label>
                             <input
@@ -113,24 +114,22 @@ const AuthPage = () => {
                             )}
                         </div>
 
-                        {/* Role Selection (Registration only) */}
-                        {isRegister && (
-                            <div>
-                                <label htmlFor="role" className="block text-sm font-medium text-primary mb-2">
-                                    I am a...
-                                </label>
-                                <select
-                                    id="role"
-                                    className="form-select"
-                                    value={role}
-                                    onChange={(e) => setRole(e.target.value)}
-                                    disabled={isLoading}
-                                >
-                                    <option value="student">Student</option>
-                                    <option value="lecturer">Lecturer</option>
-                                </select>
-                            </div>
-                        )}
+                        {/* Role Selection (Both login and registration) */}
+                        <div>
+                            <label htmlFor="role" className="block text-sm font-medium text-blue mb-2">
+                                I am a...
+                            </label>
+                            <select
+                                id="role"
+                                className="form-select"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                disabled={isLoading}
+                            >
+                                <option value="student">Student</option>
+                                <option value="lecturer">Lecturer</option>
+                            </select>
+                        </div>
 
                         {/* Submit Button */}
                         <button
@@ -172,7 +171,7 @@ const AuthPage = () => {
 
                 {/* Demo Accounts Info */}
                 <div className="mt-8 card p-4 bg-gray-50 border-gray">
-                    <h3 className="text-sm font-medium text-primary mb-2">Demo Accounts</h3>
+                    <h3 className="text-sm font-medium text-blue mb-2">Demo Accounts</h3>
                     <div className="text-xs text-secondary space-y-1">
                         <p><strong>Lecturer:</strong> teacher1 / password123</p>
                         <p><strong>Student:</strong> student1 / password123</p>

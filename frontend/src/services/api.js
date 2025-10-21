@@ -1,18 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-// TODO: replace with your deployed backend base URL when on cloud:
-export const API_BASE = "http://localhost:8080/api";
+const apiBase = import.meta.env.VITE_API_BASE || '';
 
-export const api = axios.create({
-  baseURL: API_BASE,
+const api = axios.create({
+  baseURL: apiBase,
+  headers: { 'Content-Type': 'application/json' }
 });
 
-export const aiAPI = {
-  generateQuestion: (topic) => api.post("/ai/generateQuestion", topic),
-  clusterAnswers: (answers) => api.post("/ai/clusterAnswers", answers),
-};
-
-export const wordCloudAPI = {
-  submitWord: (word) => api.post("/wordcloud/submit", { word }),
-  getWordCloud: () => api.get("/wordcloud/data"),
-};
+export default api;

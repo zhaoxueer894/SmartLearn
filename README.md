@@ -1,445 +1,405 @@
 # SmartLearn - Interactive Learning Platform
 
-**SmartLearn** is a comprehensive interactive learning and student engagement platform designed for modern educational environments. It provides a complete ecosystem for lecturers to create and manage courses while offering students an engaging learning experience.
-
-## 🏗️ Architecture & Technology Stack
-
-### Backend (Spring Boot)
-- **Framework:** Spring Boot 3.3.2 with Java 21
-- **Database:** MySQL 8.0 with Spring Data JPA/Hibernate
-- **Security:** Spring Security with BCrypt password encryption
-- **Authentication:** JWT-based token authentication
-- **API:** RESTful API design with CORS support
-
-### Frontend (React)
-- **Framework:** React 18.3.1 with modern hooks
-- **Build Tool:** Vite 5.2.0 for fast development
-- **Routing:** React Router DOM 6.30.1
-- **HTTP Client:** Axios 1.12.2
-- **State Management:** React Context API with Local Storage
-- **UI:** Custom CSS design system with responsive layout
-
-### Core Features
-- **Multi-role Authentication:** Lecturer and Student roles with role-based access control
-- **Course Management:** Complete course creation, management, and enrollment system
-- **Interactive Dashboard:** Modern left-sidebar navigation with modular content panels
-- **AI-Powered Tools:** Question generation and answer clustering capabilities
-- **Word Cloud Activities:** Real-time collaborative word cloud generation
-- **Responsive Design:** Mobile-first design with modern UI components
-
-## 📋 Prerequisites
-
-### System Requirements
-1. **Java Development Kit (JDK) 21+**
-2. **Node.js 16+ (LTS recommended)**
-3. **MySQL 8.0 Database Server**
-4. **Maven 3.6+ (or use included wrapper)**
-5. **Git** for version control
-
-### Development Tools (Recommended)
-- **IDE:** IntelliJ IDEA, VS Code, or Eclipse
-- **Database Client:** MySQL Workbench, phpMyAdmin, or DBeaver
-- **API Testing:** Postman or Thunder Client
-
-## 🚀 Quick Start
-
-### Database Setup
-
-#### Method A: Local MySQL Installation
-```sql
--- Create database and user
-CREATE DATABASE smartlearn 
-CHARACTER SET utf8mb4 
-COLLATE utf8mb4_unicode_ci;
-
-CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
-GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-#### Method B: Docker MySQL (Alternative)
-```bash
-docker run --name smartlearn-mysql \
-  -e MYSQL_ROOT_PASSWORD=rootpassword \
-  -e MYSQL_DATABASE=smartlearn \
-  -e MYSQL_USER=smartlearn_user \
-  -e MYSQL_PASSWORD=secure_password_123 \
-  -p 3306:3306 \
-  -d mysql:8.0
-```
-
-### Backend Setup (Spring Boot)
-
-#### Step 1: Database Configuration
-Update `backend/src/main/resources/application.yml`:
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/smartlearn?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
-    username: smartlearn_user
-    password: secure_password_123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update  # Automatically creates/updates tables
-    show-sql: true      # Logs SQL statements for debugging
-```
-
-#### Step 2: Build and Run Backend
-```bash
-# Navigate to backend directory
-cd backend
-
-# Clean and install dependencies
-mvn clean install
-
-# Run the application (will start on port 8080)
-mvn spring-boot:run
-```
-**Verification:** Backend should be accessible at `http://localhost:8080/api/hello`
-
-### Frontend Setup (React + Vite)
-
-#### Step 1: Install Dependencies
-```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install all npm dependencies
-npm install
-# Alternative: yarn install or pnpm install
-```
-
-#### Step 2: Environment Configuration (Optional)
-Create `frontend/.env.local` for custom API configuration:
-```env
-VITE_API_BASE_URL=http://localhost:8080/api
-```
-
-#### Step 3: Run Development Server
-```bash
-# Start development server (will start on port 5173)
-npm run dev
-# Alternative: yarn dev or pnpm dev
-```
-**Verification:** Frontend should be accessible at `http://localhost:5173`
-
-### Production Build (Optional)
-
-#### Backend Production Build
-```bash
-cd backend
-mvn clean package
-java -jar target/smartlearn-backend-0.1.0.jar
-```
-
-#### Frontend Production Build
-```bash
-cd frontend
-npm install
-npm run build
-# Output will be in 'dist' folder for deployment
-```
-
-## 🎯 Getting Started Guide
-
-### User Registration and Demo
-
-#### Initial System Setup
-1. **Access the Platform:** Navigate to `http://localhost:5173`
-2. **Registration Page:** Click "Get Started Free" or navigate to `/auth`
-3. **Create Accounts:** Register both lecturer and student accounts for full demonstration
-
-### Scenario 1: Lecturer Workflow
-
-#### Account Creation
-```json
-// Example registration data
-{
-  "username": "prof_smith",
-  "password": "SecurePass123!",
-  "role": "lecturer"
-}
-```
-
-#### Dashboard Navigation
-1. **Login:** Use lecturer credentials
-2. **Dashboard Access:** Automatically redirected to role-based dashboard
-3. **Module Navigation:** Use left sidebar to navigate between:
-   - **Overview:** Quick stats and recent activity
-   - **Course Management:** Create and manage courses
-   - **AI-Powered Tools:** Content generation and analysis
-   - **Student Engagement:** Interactive tools and activities
-   - **Analytics & Reports:** Learning analytics dashboard
-   - **Word Cloud Activities:** Collaborative word collection
-
-#### Content Creation Features
-1. **Course Management Module:**
-   - Create new courses with detailed descriptions
-   - Manage course content and resources
-   - Monitor student enrollment and progress
-
-2. **AI Tools Integration:**
-   - Generate quiz questions automatically
-   - Analyze student response patterns
-   - Create adaptive learning content
-
-3. **Interactive Features:**
-   - Set up word cloud activities for brainstorming
-   - Create real-time engagement tools
-   - Monitor student participation
-
-### Scenario 2: Student Workflow
-
-#### Account Creation
-```json
-// Example registration data
-{
-  "username": "student_jane",
-  "password": "StudentPass456!",
-  "role": "student"
-}
-```
-
-#### Learning Experience
-1. **Student Dashboard:** Access personalized learning dashboard
-2. **Available Modules:**
-   - **Overview:** Personal learning progress and achievements
-   - **My Courses:** Browse and access enrolled courses
-   - **Interactive Quizzes:** Participate in course assessments
-   - **Word Cloud Activities:** Contribute to collaborative activities
-
-#### Engagement Features
-1. **Course Participation:**
-   - View course announcements and updates
-   - Access learning materials and resources
-   - Track personal progress and completion
-
-2. **Interactive Learning:**
-   - Participate in real-time quizzes
-   - Contribute to word cloud brainstorming sessions
-   - Engage with multimedia learning content
-
-### Interactive Features Demo
-
-#### Word Cloud Activity
-1. **Lecturer Setup:**
-   - Navigate to "Word Cloud Activities" module
-   - Create a new brainstorming session
-   - Share session details with students
-
-2. **Student Participation:**
-   - Access the word cloud activity
-   - Submit relevant words or concepts
-   - View real-time collaborative word cloud
-
-3. **Real-time Collaboration:**
-   - Both roles can see live updates
-   - Word frequency visualization
-   - Export results for further analysis
-
-#### AI-Powered Tools Demo
-1. **Question Generation:**
-   ```bash
-   # API endpoint test
-   curl -X POST http://localhost:8080/api/ai/generateQuestion \
-   -H "Content-Type: application/json" \
-   -d '"Introduction to React Components"'
-   ```
-
-2. **Answer Analysis:**
-   ```bash
-   # API endpoint test
-   curl -X POST http://localhost:8080/api/ai/clusterAnswers \
-   -H "Content-Type: application/json" \
-   -d '["React is a library", "Components are reusable", "JSX syntax"]'
-   ```
-
-## 📚 API Endpoints
-
-### Authentication
-- `POST /api/v1/auth/register` — User registration with role selection
-- `POST /api/v1/auth/login` — User login with JWT token response
-
-### Health Check
-- `GET /api/hello` — System health and connectivity check
-
-### AI Features
-- `POST /api/ai/generateQuestion` — AI-powered question generation
-- `POST /api/ai/clusterAnswers` — Intelligent answer clustering
-
-### Interactive Features
-- `POST /api/wordcloud/submit` — Submit words for collaborative word clouds
-- `GET /api/wordcloud/data` — Retrieve aggregated word cloud data
-
-### Course Management (Future Extensions)
-- Course creation and management
-- Student enrollment and progress tracking
-- Assignment and quiz systems
-- Real-time collaboration features
-
-## 🔧 Technical Features
-
-### Current Implementation ✅
-
-#### Authentication & Security
-- **Multi-role Registration:** Lecturer and Student role support
-- **JWT Authentication:** Token-based session management
-- **Password Security:** BCrypt encryption for secure password storage
-- **Role-based Access:** Protected routes and features based on user roles
-
-#### User Interface
-- **Modern Dashboard:** Left-sidebar navigation with modular content
-- **Responsive Design:** Mobile-first approach with responsive layouts
-- **Theme System:** Custom brown color scheme with consistent styling
-- **Interactive Components:** Real-time feedback and smooth transitions
-
-#### Core Functionality
-- **Word Cloud System:** Real-time collaborative word collection and visualization
-- **AI Integration:** Placeholder endpoints for question generation and answer analysis
-- **Health Monitoring:** System health check endpoints
-- **Data Persistence:** MySQL database with automatic schema generation
-
-### Planned Extensions 🔄
-
-#### Course Management System
-- **Course Creation:** Detailed course setup with metadata
-- **Student Enrollment:** Bulk enrollment and management tools
-- **Content Management:** Upload and organize course materials
-- **Progress Tracking:** Monitor student learning progress
-
-#### Assessment Tools
-- **Quiz Builder:** Create and manage interactive quizzes
-- **Real-time Assessment:** Live quiz participation with instant feedback
-- **Grading System:** Automated and manual grading capabilities
-- **Analytics Dashboard:** Detailed performance analytics
-
-#### Collaboration Features
-- **Announcement System:** Course-wide communication tools
-- **Discussion Forums:** Student-lecturer interaction spaces
-- **Real-time Chat:** Instant messaging capabilities
-- **File Sharing:** Secure document and resource sharing
-
-## 🚀 Deployment Options
-
-### Backend Deployment
-**Recommended:** Cloud platforms with Java support
-- **Render/Railway:** Simple Java web service deployment
-- **AWS/GCP/Azure:** Enterprise-grade cloud deployment
-- **Heroku:** Quick prototype deployment
-
-**Build Command:**
-```bash
-mvn clean package
-java -jar target/smartlearn-backend-0.1.0.jar
-```
-
-### Frontend Deployment
-**Recommended:** Static site hosting platforms
-- **Vercel/Netlify:** Optimized for React applications
-- **AWS S3 + CloudFront:** Enterprise CDN distribution
-- **GitHub Pages:** Simple static hosting
-
-**Build Command:**
-```bash
-npm run build
-```
-
-### Configuration for Production
-1. **Update API Base URL:** Edit `frontend/src/services/api.js`
-2. **Environment Variables:** Configure database and security settings
-3. **SSL/HTTPS:** Enable secure connections for production
-
-## 🐛 Troubleshooting Guide
-
-### Common Issues and Solutions
-
-#### Database Connection Issues
-```bash
-# Check MySQL service status
-sudo systemctl status mysql  # Linux
-brew services list | grep mysql  # macOS
-
-# Test database connection
-mysql -u smartlearn_user -p smartlearn
-```
-
-#### Port Conflicts
-```bash
-# Check if ports are in use
-netstat -an | grep 8080  # Backend port
-netstat -an | grep 5173  # Frontend port
-
-# Kill processes if needed
-sudo kill -9 $(lsof -t -i:8080)
-```
-
-#### Build Issues
-```bash
-# Clean Maven cache
-mvn clean
-rm -rf ~/.m2/repository/com/smartlearn
-
-# Clear npm cache
-npm cache clean --force
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Development Tips
-
-#### Hot Reloading
-- **Frontend:** Vite provides instant hot module replacement
-- **Backend:** Use Spring Boot DevTools for automatic restart
-
-#### Debugging
-- **Frontend:** Browser DevTools with React DevTools extension
-- **Backend:** IDE debugging with breakpoints
-- **Database:** Check application logs for SQL statements
-
-#### Performance Monitoring
-- **Frontend:** React Profiler for component performance
-- **Backend:** Spring Actuator endpoints for health monitoring
-- **Database:** MySQL slow query log analysis
-
-## 🔧 Development & Extension
-
-### Project Structure
-```
-SmartLearn/
-├── backend/                 # Spring Boot API
-│   ├── src/main/java/com/smartlearn/
-│   │   ├── auth/           # Authentication & Security
-│   │   ├── controller/     # REST Controllers
-│   │   ├── model/          # JPA Entities
-│   │   ├── service/        # Business Logic
-│   │   └── repo/           # Data Repositories
-│   └── src/main/resources/
-├── frontend/               # React Application
-│   ├── src/
-│   │   ├── components/     # Reusable Components
-│   │   ├── pages/          # Page Components
-│   │   ├── services/       # API Services
-│   │   └── styles/         # CSS Styles
-│   └── public/
-└── docs/                   # Documentation
-```
-
-### Next Steps for Extension
-- **Database Scaling:** Implement connection pooling and optimization
-- **Real-time Features:** Add WebSocket support for live collaboration
-- **File Management:** Course materials and assignment uploads
-- **Advanced Analytics:** Detailed learning analytics and reporting
-- **Mobile App:** React Native mobile application
-- **Microservices:** Service decomposition for scalability
-- **CI/CD Pipeline:** Automated testing and deployment
-
-## 📄 License & Contributing
-
-This project is designed for educational purposes and can be extended for commercial use. Contributions are welcome through pull requests and issue reporting.
-
-**Note:** This platform is designed for educational demonstration and can be extended for production use with additional security, scalability, and feature enhancements.
+**Language / 语言选择:** [English](#english) | [中文](#中文)
 
 ---
 
-**SmartLearn** - Transforming education through interactive technology 🎓
+## English
+
+SmartLearn is a modern educational platform that enables lecturers to create courses and engage students through interactive tools and AI-powered features.
+
+### 🏗️ Tech Stack
+
+**Backend:** Spring Boot 3.3.2 + MySQL 8.0 + Spring Security + BCrypt  
+**Frontend:** React 18.3.1 + Vite 5.2.0 + Custom CSS Design System
+
+## 🚀 Quick Start
+
+### 🐳 Docker 方式（推荐）
+
+**环境要求:**
+- Docker Desktop
+- Git
+
+**一键启动:**
+```bash
+# 1. 克隆项目
+git clone <your-repository-url>
+cd SmartLearn
+
+# 2. 启动所有服务
+docker compose up --build
+
+# 3. 访问应用
+# 前端: http://localhost:5173
+# 后端: http://localhost:8080  
+# 数据库管理: http://localhost:8081
+```
+
+**停止服务:**
+```bash
+# 停止服务（保留数据）
+docker compose down
+
+# 停止并清理数据
+docker compose down -v
+```
+
+### 💻 本地开发方式
+
+**环境要求:**
+- Java 21+
+- Node.js 16+
+- MySQL 8.0
+
+**数据库配置:**
+```sql
+CREATE DATABASE smartlearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
+GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
+```
+
+**启动后端:**
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+# Backend: http://localhost:8080
+```
+
+**启动前端:**
+```bash
+cd frontend
+npm install
+npm run dev
+# Frontend: http://localhost:5173
+```
+
+## 🎯 Features
+
+### For Lecturers
+- **Course Management**: Create and manage courses with detailed information
+- **AI Tools**: Generate questions and analyze student responses
+- **Word Cloud Activities**: Interactive brainstorming sessions
+- **Student Analytics**: Track engagement and progress
+
+### For Students
+- **Course Enrollment**: Browse and access enrolled courses
+- **Interactive Learning**: Participate in quizzes and activities
+- **Progress Tracking**: Monitor learning achievements
+- **Collaborative Tools**: Contribute to word clouds and discussions
+
+## 🔧 Key Functionality
+
+#### Authentication
+- Role-based access (Lecturer/Student)
+- Frontend: Mock authentication (development mode)
+- Backend: Real database authentication with BCrypt
+- Note: Frontend uses mock login, backend has full auth implementation
+
+### Interactive Features
+- Real-time word cloud collaboration
+- AI-powered question generation
+- Modern responsive dashboard
+- Mobile-friendly design
+
+#### Current Status
+✅ **Fully Implemented Backend**
+- Complete REST API with 15+ endpoints
+- User authentication with database persistence
+- Course management (CRUD operations)
+- Student enrollment system
+- Quiz and announcement systems
+- Word cloud collaboration features
+
+✅ **Frontend (Mock Integration)**
+- User interface for all features
+- Mock authentication (not connected to backend)
+- Course creation and management UI
+- Word cloud activities
+- AI tools integration (mock data)
+- Responsive design with elegant color scheme
+
+🔄 **Integration Gap**
+- Frontend uses mock authentication instead of backend API
+- Frontend displays mock data instead of real database data
+- API endpoints exist but frontend doesn't call them
+
+## ⚠️ Important Notes
+
+### Backend vs Frontend Implementation Status
+
+**Backend (Spring Boot):** ✅ **Production Ready**
+- Complete MySQL database integration
+- 15+ REST API endpoints fully implemented
+- Real user authentication with BCrypt encryption
+- Course management, enrollment, quiz, and announcement systems
+- All CRUD operations working with database persistence
+
+**Frontend (React):** ⚠️ **Development Mode**
+- UI is complete and fully functional
+- Currently uses mock data and localStorage
+- Authentication bypasses backend API calls
+- All features work with simulated data
+
+### 🔗 Frontend-Backend 集成状态:
+
+**Docker 环境:**
+- ✅ Frontend 通过 `VITE_API_BASE` 连接到后端容器
+- ✅ 支持真实 API 调用（当设置环境变量时）
+- ⚠️ 本地开发模式仍使用 Mock 认证
+
+**本地开发连接步骤:**
+1. 设置环境变量: `VITE_API_BASE=http://localhost:8080`
+2. 重启前端开发服务器
+3. 更新 `AuthContext.jsx` 使用真实后端登录
+4. 测试所有 API 集成
+
+---
+
+## 中文
+
+SmartLearn 是一个现代化的教育平台，使讲师能够创建课程并通过互动工具和AI功能与学生互动。
+
+### 🏗️ 技术栈
+
+**后端:** Spring Boot 3.3.2 + MySQL 8.0 + Spring Security + BCrypt  
+**前端:** React 18.3.1 + Vite 5.2.0 + 自定义CSS设计系统
+
+### 🚀 快速开始
+
+#### 环境要求
+- Java 21+
+- Node.js 16+
+- MySQL 8.0
+
+#### 数据库配置
+```sql
+CREATE DATABASE smartlearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
+GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
+```
+
+#### 启动后端
+```bash
+cd backend
+mvn clean install
+mvn spring-boot:run
+# 后端: http://localhost:8080
+```
+
+#### 启动前端
+```bash
+cd frontend
+npm install
+npm run dev
+# 前端: http://localhost:5173
+```
+
+### 🎯 功能特性
+
+#### 讲师功能
+- **课程管理**: 创建和管理详细的课程信息
+- **AI工具**: 生成问题并分析学生回答
+- **词云活动**: 互动式头脑风暴会话
+- **学生分析**: 跟踪参与度和进度
+
+#### 学生功能
+- **课程注册**: 浏览和访问已注册的课程
+- **互动学习**: 参与测验和活动
+- **进度跟踪**: 监控学习成就
+- **协作工具**: 参与词云和讨论
+
+### 🔧 核心功能
+
+#### 用户认证
+- 基于角色的访问控制（讲师/学生）
+- 前端：模拟认证（开发模式）
+- 后端：基于数据库的真实认证，使用BCrypt加密
+- 注意：前端使用模拟登录，后端已有完整认证实现
+
+#### 互动特性
+- 实时词云协作
+- AI驱动的问题生成
+- 现代响应式仪表板
+- 移动端友好设计
+
+#### 当前状态
+✅ **后端完全实现**
+- 完整的REST API，包含15+个接口
+- 基于数据库的用户认证系统
+- 课程管理（CRUD操作）
+- 学生注册系统
+- 测验和公告系统
+- 词云协作功能
+
+✅ **前端（模拟集成）**
+- 所有功能的用户界面
+- 模拟认证（未连接后端）
+- 课程创建和管理界面
+- 词云活动
+- AI工具集成（模拟数据）
+- 优雅配色的响应式设计
+
+🔄 **集成差距**
+- 前端使用模拟认证而非后端API
+- 前端显示模拟数据而非真实数据库数据
+- API接口已存在但前端未调用
+
+## ⚠️ 重要说明
+
+### 后端与前端实现状态
+
+**后端 (Spring Boot):** ✅ **生产就绪**
+- 完整的MySQL数据库集成
+- 15+个REST API接口完全实现
+- 基于BCrypt加密的真实用户认证
+- 课程管理、注册、测验和公告系统
+- 所有CRUD操作都与数据库持久化工作
+
+**前端 (React):** ⚠️ **开发模式**
+- UI界面完整且功能齐全
+- 当前使用模拟数据和localStorage
+- 认证绕过后端API调用
+- 所有功能都使用模拟数据运行
+
+### 连接前端到后端的步骤:
+1. 更新 `AuthContext.jsx` 调用 `/api/v1/auth/login` 而非模拟登录
+2. 用API调用替换课程/注册组件中的模拟数据
+3. 配置用于生产部署的API基础URL
+4. 彻底测试所有API集成
+
+## 🐳 Docker 部署详情
+
+### **服务架构**
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │    Backend      │    │     MySQL       │
+│   (React+Vite)  │───▶│  (Spring Boot)  │───▶│   (Database)    │
+│   Port: 5173    │    │   Port: 8080    │    │   Port: 3306    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │     Adminer     │
+                       │ (DB Management) │
+                       │   Port: 8081    │
+                       └─────────────────┘
+```
+
+### **Docker 配置文件**
+- `docker-compose.yml` - 服务编排配置
+- `backend/Dockerfile` - 后端构建配置
+- `frontend/Dockerfile` - 前端构建配置  
+- `docker/mysql/init/init.sql` - 数据库初始化脚本
+
+### **数据库访问（Adminer）**
+访问 http://localhost:8081 并使用以下信息：
+- **System**: MySQL
+- **Server**: `db`
+- **Username**: `smartlearn_user`
+- **Password**: `secure_password_123`
+- **Database**: `smartlearn`
+
+### 📋 API接口
+
+```bash
+# 用户认证（完全实现）
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+
+# 健康检查
+GET /api/hello
+
+# AI功能（模拟实现）
+POST /api/ai/generateQuestion
+POST /api/ai/clusterAnswers
+
+# 词云（完全实现）
+POST /api/wordcloud/submit
+GET /api/wordcloud/data
+
+# 课程管理（完全实现）
+POST /api/v1/courses
+GET /api/v1/courses
+PUT /api/v1/courses/{id}
+DELETE /api/v1/courses/{id}
+
+# 学生注册系统（完全实现）
+POST /api/v1/courses/{courseId}/enrollments
+GET /api/v1/courses/{courseId}/enrollments
+
+# 公告系统（完全实现）
+POST /api/v1/courses/{courseId}/announcements
+GET /api/v1/courses/{courseId}/announcements
+
+# 测验系统（完全实现）
+POST /api/v1/courses/{courseId}/quizzes
+GET /api/v1/courses/{courseId}/quizzes
+POST /api/v1/quizzes/{quizId}/submit
+```
+
+## 🛠️ 开发者指南
+
+### **Docker 开发流程**
+```bash
+# 开发模式启动
+docker compose up --build
+
+# 查看服务状态
+docker compose ps
+
+# 查看日志
+docker compose logs -f [service-name]
+
+# 停止服务
+docker compose down
+
+# 重置环境（清理数据）
+docker compose down -v
+```
+
+### **故障排查**
+```bash
+# 检查容器状态
+docker compose ps
+
+# 查看特定服务日志
+docker compose logs backend
+docker compose logs frontend  
+docker compose logs db
+
+# 进入容器调试
+docker compose exec backend bash
+docker compose exec db mysql -u root -p
+```
+
+---
+
+**SmartLearn** - Modern education through interactive technology 🎓
+
+## Run with Docker (recommended for teammates)
+
+This repository includes a `docker-compose.yml` that starts MySQL, the backend (Spring Boot), the frontend (nginx static build) and Adminer (DB web UI).
+
+Quick steps (Windows PowerShell):
+
+```powershell
+# from project root
+docker compose up --build
+```
+
+After startup:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8080
+- Adminer: http://localhost:8081 (username: smartlearn_user, password: secure_password_123)
+
+To stop and remove containers:
+
+```powershell
+docker compose down -v
+```
+
+Notes:
+- The MySQL initialization script is in `docker/mysql/init/init.sql` and will create a `smartlearn` database and sample users. Spring Boot is configured to auto-create/update tables using JPA.
+- If you want the frontend to call the backend inside Docker, the compose file injects `VITE_API_BASE=http://backend:8080` into the frontend build environment.

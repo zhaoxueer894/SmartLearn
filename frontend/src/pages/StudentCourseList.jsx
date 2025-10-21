@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import api from '../api';
+// import { courseService } from '../services'; // 暂时注释掉
 
 const StudentCourseList = () => {
     const { user } = useAuth();
@@ -61,10 +61,32 @@ const StudentCourseList = () => {
     }
 
     return (
+        <div className="min-h-screen bg-gray-50">
+            {/* Header with Back to Home Button */}
+            <div className="bg-white shadow-sm border-b border-blue">
+                <div className="container py-4">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-4">
+                            <Link to="/" className="text-2xl font-bold text-blue hover:text-blue-600 transition">
+                                SmartLearn
+                            </Link>
+                            <span className="text-gray-300">|</span>
+                            <h1 className="text-xl font-semibold text-blue">My Courses</h1>
+                        </div>
+                        <Link to="/" className="btn btn-secondary">
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to Home
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
         <div className="container py-8">
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-primary mb-2">My Courses</h1>
+                <h2 className="text-3xl font-bold text-blue mb-2">My Courses</h2>
                 <p className="text-secondary">
                     Welcome back, {user?.username}! Here are your enrolled courses.
                 </p>
@@ -94,7 +116,7 @@ const StudentCourseList = () => {
                             <div className="p-6">
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex-1">
-                                        <h3 className="text-lg font-semibold text-primary mb-1">
+                                        <h3 className="text-lg font-semibold text-blue mb-1">
                                             {course.courseCode}
                                         </h3>
                                         <h4 className="text-base text-secondary mb-2">
@@ -134,12 +156,13 @@ const StudentCourseList = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                     </div>
-                    <h3 className="text-lg font-medium text-primary mb-2">No courses yet</h3>
+                    <h3 className="text-lg font-medium text-blue mb-2">No courses yet</h3>
                     <p className="text-secondary mb-4">
                         You haven't enrolled in any courses yet. Contact your administrator to get enrolled.
                     </p>
                 </div>
             )}
+        </div>
         </div>
     );
 };
