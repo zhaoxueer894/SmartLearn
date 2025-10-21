@@ -15,19 +15,51 @@ SmartLearn is a modern educational platform that enables lecturers to create cou
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### 🐳 Docker 方式（推荐）
+
+**环境要求:**
+- Docker Desktop
+- Git
+
+**一键启动:**
+```bash
+# 1. 克隆项目
+git clone <your-repository-url>
+cd SmartLearn
+
+# 2. 启动所有服务
+docker compose up --build
+
+# 3. 访问应用
+# 前端: http://localhost:5173
+# 后端: http://localhost:8080  
+# 数据库管理: http://localhost:8081
+```
+
+**停止服务:**
+```bash
+# 停止服务（保留数据）
+docker compose down
+
+# 停止并清理数据
+docker compose down -v
+```
+
+### 💻 本地开发方式
+
+**环境要求:**
 - Java 21+
 - Node.js 16+
 - MySQL 8.0
 
-### Database Setup
+**数据库配置:**
 ```sql
 CREATE DATABASE smartlearn CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'smartlearn_user'@'localhost' IDENTIFIED BY 'secure_password_123';
 GRANT ALL PRIVILEGES ON smartlearn.* TO 'smartlearn_user'@'localhost';
 ```
 
-### Run Backend
+**启动后端:**
 ```bash
 cd backend
 mvn clean install
@@ -35,7 +67,7 @@ mvn spring-boot:run
 # Backend: http://localhost:8080
 ```
 
-### Run Frontend
+**启动前端:**
 ```bash
 cd frontend
 npm install
@@ -110,11 +142,18 @@ npm run dev
 - Authentication bypasses backend API calls
 - All features work with simulated data
 
-### To Connect Frontend to Backend:
-1. Update `AuthContext.jsx` to call `/api/v1/auth/login` instead of mock login
-2. Replace mock data in course/enrollment components with API calls
-3. Configure API base URL for production deployment
-4. Test all API integrations thoroughly
+### 🔗 Frontend-Backend 集成状态:
+
+**Docker 环境:**
+- ✅ Frontend 通过 `VITE_API_BASE` 连接到后端容器
+- ✅ 支持真实 API 调用（当设置环境变量时）
+- ⚠️ 本地开发模式仍使用 Mock 认证
+
+**本地开发连接步骤:**
+1. 设置环境变量: `VITE_API_BASE=http://localhost:8080`
+2. 重启前端开发服务器
+3. 更新 `AuthContext.jsx` 使用真实后端登录
+4. 测试所有 API 集成
 
 ---
 
@@ -230,6 +269,38 @@ npm run dev
 3. 配置用于生产部署的API基础URL
 4. 彻底测试所有API集成
 
+## 🐳 Docker 部署详情
+
+### **服务架构**
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │    Backend      │    │     MySQL       │
+│   (React+Vite)  │───▶│  (Spring Boot)  │───▶│   (Database)    │
+│   Port: 5173    │    │   Port: 8080    │    │   Port: 3306    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │     Adminer     │
+                       │ (DB Management) │
+                       │   Port: 8081    │
+                       └─────────────────┘
+```
+
+### **Docker 配置文件**
+- `docker-compose.yml` - 服务编排配置
+- `backend/Dockerfile` - 后端构建配置
+- `frontend/Dockerfile` - 前端构建配置  
+- `docker/mysql/init/init.sql` - 数据库初始化脚本
+
+### **数据库访问（Adminer）**
+访问 http://localhost:8081 并使用以下信息：
+- **System**: MySQL
+- **Server**: `db`
+- **Username**: `smartlearn_user`
+- **Password**: `secure_password_123`
+- **Database**: `smartlearn`
+
 ### 📋 API接口
 
 ```bash
@@ -266,6 +337,41 @@ GET /api/v1/courses/{courseId}/announcements
 POST /api/v1/courses/{courseId}/quizzes
 GET /api/v1/courses/{courseId}/quizzes
 POST /api/v1/quizzes/{quizId}/submit
+```
+
+## 🛠️ 开发者指南
+
+### **Docker 开发流程**
+```bash
+# 开发模式启动
+docker compose up --build
+
+# 查看服务状态
+docker compose ps
+
+# 查看日志
+docker compose logs -f [service-name]
+
+# 停止服务
+docker compose down
+
+# 重置环境（清理数据）
+docker compose down -v
+```
+
+### **故障排查**
+```bash
+# 检查容器状态
+docker compose ps
+
+# 查看特定服务日志
+docker compose logs backend
+docker compose logs frontend  
+docker compose logs db
+
+# 进入容器调试
+docker compose exec backend bash
+docker compose exec db mysql -u root -p
 ```
 
 ---
