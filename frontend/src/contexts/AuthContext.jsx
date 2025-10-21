@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -10,29 +11,37 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password, userRole = 'student') => {
         try {
-            // 临时使用模拟登录，避免API调用问题
-            if (username && password) {
-                // 角色完全基于用户选择，默认为student
-                const role = userRole;
-                
-                const mockUser = {
-                    id: Date.now(),
-                    username: username,
-                    role: role,
-                    email: `${username}@smartlearn.com`
-                };
-                const mockToken = 'mock-jwt-token-' + Date.now();
-
-                console.log("Mock login successful:", mockUser);
-                
-                localStorage.setItem('token', mockToken);
-                localStorage.setItem('user', JSON.stringify(mockUser));
-                setToken(mockToken);
-                setUser(mockUser);
+            const apiBase = import.meta.env.VITE_API_BASE;
+            if (apiBase) {
+                // Call real backend
+                const resp = await api.post('/api/v1/auth/login', { username, password });
+                const { token, user: respUser } = resp.data;
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(respUser));
+                setToken(token);
+                setUser(respUser);
                 return true;
             } else {
-                alert("Please enter username and password");
-                return false;
+                // Fallback to mock login
+                if (username && password) {
+                    const role = userRole;
+                    const mockUser = {
+                        id: Date.now(),
+                        username: username,
+                        role: role,
+                        email: `${username}@smartlearn.com`
+                    };
+                    const mockToken = 'mock-jwt-token-' + Date.now();
+                    console.log("Mock login successful:", mockUser);
+                    localStorage.setItem('token', mockToken);
+                    localStorage.setItem('user', JSON.stringify(mockUser));
+                    setToken(mockToken);
+                    setUser(mockUser);
+                    return true;
+                } else {
+                    alert("Please enter username and password");
+                    return false;
+                }
             }
         } catch (error) {
             console.error("Login failed:", error);

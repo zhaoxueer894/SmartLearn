@@ -271,3 +271,29 @@ POST /api/v1/quizzes/{quizId}/submit
 ---
 
 **SmartLearn** - Modern education through interactive technology 🎓
+
+## Run with Docker (recommended for teammates)
+
+This repository includes a `docker-compose.yml` that starts MySQL, the backend (Spring Boot), the frontend (nginx static build) and Adminer (DB web UI).
+
+Quick steps (Windows PowerShell):
+
+```powershell
+# from project root
+docker compose up --build
+```
+
+After startup:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8080
+- Adminer: http://localhost:8081 (username: smartlearn_user, password: secure_password_123)
+
+To stop and remove containers:
+
+```powershell
+docker compose down -v
+```
+
+Notes:
+- The MySQL initialization script is in `docker/mysql/init/init.sql` and will create a `smartlearn` database and sample users. Spring Boot is configured to auto-create/update tables using JPA.
+- If you want the frontend to call the backend inside Docker, the compose file injects `VITE_API_BASE=http://backend:8080` into the frontend build environment.
